@@ -1,0 +1,70 @@
+---
+import Layout from "../../components/Layout.astro";
+import Article from "../../components/Article.astro";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const strapiUrl = import.meta.env.STRAPI_URL ?? "http://localhost:1337";
+const strapiToken = import.meta.env.STRAPI_API_TOKEN;
+
+const listRes = await fetch(
+  `${strapiUrl}/api/articles?filters[slug][$eq]=${slug}`,
+  { headers: { Authorization: `bearer ${strapiToken}` } }
+);
+if (!listRes.ok) {
+  return Astro.redirect("/404");
+}
+const listJson = await listRes.json();
+if (!listJson.data || listJson.data.length === 0) {
+  return Astro.redirect("/404");
+}
+
+const documentId = listJson.data[0].documentId;
+
+const res = await fetch(`${strapiUrl}/api/articles/${documentId}`, {
+  headers: { Authorization: `bearer ${strapiToken}` },
+});
+if (!res.ok) {
+  return Astro.redirect("/404");
+}
+const json = await res.json();
+const article = json.data;
+
+const title = article.title;
+const description = article.description;
+const date = new Date(article.createdAt);
+const content = article.content ?? "";
+
+const postUrl = new URL(`/article/${slug}`, Astro.site).href;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description,
+  "datePublished": date.toISOString(),
+  "url": postUrl,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": postUrl,
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "UINUX",
+    "url": "https://uinux.co",
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "UINUX",
+    "url": "https://uinux.co",
+  },
+};
+---
+
+<Layout title={`${title} — UINUX Blog`} description={description} ogType="article">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Article title={title} date={date} description={description}>
+    <Fragment set:html={content} />
+  </Article>
+</Layout>
