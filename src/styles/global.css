@@ -1,73 +1,282 @@
-/* ============================================
-   UINUX Blog — Global Styles
-   A calm, typography-first design system.
-   ============================================ */
-
-:root {
-  --font-body: "Newsreader", Georgia, "Times New Roman", serif;
-  --font-heading: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
-
-  --color-text: #1a1a1a;
-  --color-text-secondary: #555;
-  --color-text-tertiary: #888;
-  --color-bg: #fafaf9;
-  --color-surface: #fff;
-  --color-border: #e5e5e3;
-  --color-link: #1a1a1a;
-  --color-link-hover: #555;
-  --color-code-bg: #f4f4f2;
-
-  --width-content: 640px;
-  --width-page: 720px;
-
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 2rem;
-  --space-xl: 3rem;
-  --space-2xl: 5rem;
-}
-
+/* Reset */
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+   box-sizing: border-box;
 }
 
-html {
-  font-size: 18px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+   margin: 0;
+   padding: 0;
+   border: 0;
+   vertical-align: baseline;
 }
 
-body {
-  font-family: var(--font-body);
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  line-height: 1.7;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+   display: block;
 }
 
-a {
-  color: var(--color-link);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-  transition: color 0.15s ease;
-}
-
-a:hover {
-  color: var(--color-link-hover);
+ol,
+ul {
+   list-style: none;
 }
 
 img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+   display: block;
+   width: 100%;
 }
 
-::selection {
-  background-color: #d4d4d0;
+a,
+button {
+   cursor: pointer;
+}
+
+/* Theme */
+* {
+   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+   font-weight: 400;
+}
+
+b {
+   font-weight: 700;
+}
+
+html {
+   overflow-x: hidden;
+}
+
+body {
+   color: #fff;
+   min-width: 320px;
+   min-height: 100vh;
+   width: 100%;
+   height: 100%;
+   overflow-x: hidden;
+   background-color: #01074b;
+}
+
+header {
+   min-height: 56px;
+   padding: 15px;
+   background-color: #0d1938;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+header img.header-img {
+   max-width: 132px;
+}
+
+section.article {
+   border-top: .3rem solid #00a0bd;
+   border-bottom: .3rem solid #00a0bd;
+   padding: 30px 0px;
+}
+
+.container {
+   max-width: 728px;
+   width: 100%;
+   margin: 0 auto;
+   padding: 15px;
+}
+
+h3 {
+   margin-bottom: 20px;
+   word-break: break-word;
+   line-height: 1.5;
+   font-size: 16px;
+   font-weight: 700;
+}
+
+p {
+   margin-bottom: 10px;
+   line-height: 1.4;
+   font-size: 16px;
+}
+
+ul.list {
+   margin: 20px 0px;
+}
+
+ul.list li {
+   line-height: 1.4;
+   font-size: 16px;
+   list-style-type: disc;
+   list-style-position: inside;
+}
+
+/* Search results */
+.article-links {
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   gap: 25px;
+   max-width: 652px;
+   width: 100%;
+}
+
+.article-link p {
+   display: -webkit-box;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   color: #999;
+   font-size: 11px;
+   margin: 0;
+   line-height: 1.2;
+   margin-bottom: 2px;
+}
+
+.article-link p a {
+   color: #999;
+   text-decoration: none;
+}
+
+.article-link p.article-link-title {
+   font-size: 14px;
+}
+
+/* Footer */
+footer {
+   padding: 30px 0px;
+}
+
+footer img.footer-img {
+   max-width: 132px;
+   margin: 0 auto;
+   margin-bottom: 16px;
+}
+
+footer .footer-links {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-flow: row wrap;
+   gap: 10px;
+}
+
+footer .footer-links a {
+   color: #aaa;
+}
+
+footer .footer-links a:hover {
+   color: #5fd2e9;
+}
+
+/* Search input */
+#search-input {
+   width: 100%;
+   font-size: 16px;
+   padding: 10px 15px;
+   border: 1px solid #00a0bd;
+   border-radius: 4px;
+   background: #0d1938;
+   color: #fff;
+   outline: none;
+   margin-bottom: 20px;
+}
+
+#search-input:focus {
+   border-color: #5fd2e9;
+}
+
+#search-input::placeholder {
+   color: #666;
+}
+
+.search-empty {
+   font-size: 14px;
+   color: #999;
 }

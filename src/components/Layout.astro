@@ -1,6 +1,4 @@
 ---
-import Nav from "./Nav.astro";
-import Footer from "./Footer.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -30,6 +28,7 @@ const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL.href} />
+    <link rel="icon" type="image/png" sizes="32x32" href="/32x32.png" />
 
     <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
@@ -47,37 +46,23 @@ const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
     <!-- JSON-LD -->
     <slot name="head" />
-
-    <link rel="alternate" type="application/rss+xml" title="UINUX Blog" href="/rss.xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
-    <div class="page">
-      <Nav />
-      <main>
-        <slot />
-      </main>
-      <Footer />
-    </div>
+    <header>
+      <img src="/logo-footer.svg" alt="" class="header-img" />
+    </header>
+    <slot />
+    <footer>
+      <div class="container">
+        <img src="/logo-footer.svg" alt="" class="footer-img" />
+        <div class="footer-links">
+          <a href="https://contradia.com/privacy" target="_blank">Privacy Policy</a>
+          <a href="https://contradia.com/privacy#10" target="_blank">Notice at collection</a>
+          <a href="https://contradia.com/cookie-policy" target="_blank">Cookie Policy</a>
+          <a href="https://contradia.com/terms-of-use" target="_blank">Terms of use</a>
+          <a href="https://contradia.com/about-us" target="_blank">About us</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
-
-<style>
-  .page {
-    max-width: var(--width-page);
-    margin: 0 auto;
-    padding: 0 var(--space-lg);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  main {
-    flex: 1;
-  }
-</style>

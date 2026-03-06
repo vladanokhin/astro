@@ -1,23 +1,37 @@
 import type { APIContext } from "astro";
-import { getCollection } from "astro:content";
 
-export async function GET(context: APIContext) {
-  const posts = (await getCollection("posts")).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-  );
+export const prerender = false;
 
-  const index = posts.map((post) => ({
-    slug: post.id,
-    title: post.data.title,
-    description: post.data.description,
-    date: post.data.date.toISOString(),
-    body: post.body
-      .replace(/---[\s\S]*?---/, "")
-      .replace(/[#*`\[\]()>_~|\\]/g, "")
-      .replace(/\n+/g, " ")
-      .replace(/\s+/g, " ")
-      .trim(),
-  }));
+export async function GET(_context: APIContext) {
+  const strapiUrl = import.meta.env.STRAPI_URL ?? "http://localhost:1337";
+  const strapiToken = import.meta.env.STRAPI_API_TOKEN;
+
+  const res = await fetch(`${strapiUrl}/api/articles`, {
+    headers: { Authorization: `bearer ${strapiToken}` },
+  });
+
+  if (!res.ok) {
+    return new Response(JSON.stringify([]), {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  const json = await res.json();
+
+  const index = json.data
+    .map((item: any) => ({
+      slug: item.slug,
+      title: item.title,
+      description: item.description ?? "",
+      date: new Date(item.createdAt).toISOString(),
+      body: (item.content ?? "")
+        .replace(/<[^>]*>/g, "")
+        .replace(/[#*`\[\]()>_~|\\]/g, "")
+        .replace(/\n+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim(),
+    }))
+    .sort((a: any, b: any) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
 
   return new Response(JSON.stringify(index), {
     headers: { "Content-Type": "application/json" },

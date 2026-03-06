@@ -1,16 +1,9 @@
 import { defineConfig } from "astro/config";
-import mdx from "@astrojs/mdx";
-import node from '@astrojs/node'; // адаптер для Node.js
+import node from '@astrojs/node';
 
 export default defineConfig({
   site: "https://uinuxblog.getuinux.com",
-  integrations: [mdx()],
-  markdown: {
-    shikiConfig: {
-      theme: "github-light",
-    },
-  },
-  output: 'server', // Вмикає SSR для всього проєкту
+  output: 'server',
   adapter: node({
     mode: 'standalone',
   }),

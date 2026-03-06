@@ -1,6 +1,5 @@
 ---
 import Layout from "../../components/Layout.astro";
-import Article from "../../components/Article.astro";
 
 export const prerender = false;
 
@@ -34,7 +33,7 @@ const article = json.data;
 const title = article.title;
 const description = article.description;
 const date = new Date(article.createdAt);
-const content = article.content ?? "";
+const content = article.body ?? "";
 
 const postUrl = new URL(`/article/${slug}`, Astro.site).href;
 
@@ -64,7 +63,9 @@ const jsonLd = {
 
 <Layout title={`${title} — UINUX Blog`} description={description} ogType="article">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-  <Article title={title} date={date} description={description}>
-    <Fragment set:html={content} />
-  </Article>
+  <section class="article">
+    <div class="container">
+      <Fragment set:html={content} />
+    </div>
+  </section>
 </Layout>
